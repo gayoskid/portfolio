@@ -1,0 +1,7 @@
+node_modules
+dist
+.vercel
+
+# Private source files: CVs, original photos and real contact details
+assets/
+contact.local.json
