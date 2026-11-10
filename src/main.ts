@@ -1,7 +1,8 @@
 import '@fontsource/dm-sans/400.css';
 import '@fontsource/dm-sans/500.css';
 import '@fontsource/dm-sans/700.css';
-import '@fontsource/playfair-display/500.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
 import '@fontsource/jetbrains-mono/400.css';
 import './style.css';
 
