@@ -41,19 +41,24 @@ async function play(body: HTMLElement, lines: readonly TerminalLine[]): Promise<
 }
 
 export function createTerminal(logName: string, logTag: string, lines: readonly TerminalLine[]): HTMLElement {
-  const body = el('div', { className: 'terminal-body', attrs: { 'aria-label': `Example ${logName} session` } });
+  const fullSession = () => [
+    ...lines.map((line) => el('div', { className: `terminal-line tone-${line.tone}`, text: line.text })),
+    promptRow(createCursor()),
+  ];
+  // An invisible copy of the finished session reserves the full height up front,
+  // so typing never pushes the rest of the page down.
+  const ghost = el('div', { className: 'terminal-ghost', attrs: { 'aria-hidden': 'true' } }, fullSession());
+  const live = el('div', { className: 'terminal-live' });
+  const body = el('div', { className: 'terminal-body', attrs: { 'aria-label': `Example ${logName} session` } }, [ghost, live]);
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (reduceMotion) {
-    body.append(
-      ...lines.map((line) => el('div', { className: `terminal-line tone-${line.tone}`, text: line.text })),
-      promptRow(createCursor()),
-    );
+    live.append(...fullSession());
   } else {
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) {
         observer.disconnect();
-        void play(body, lines);
+        void play(live, lines);
       }
     });
     observer.observe(body);

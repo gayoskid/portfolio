@@ -559,3 +559,11 @@ h1, h2, .world-headline { text-wrap: balance; }
 .hero-typed.is-static { white-space: normal; }
 .hero-cursor { display: inline-block; width: .07em; height: .95em; margin-left: .08em; vertical-align: -.08em; background: var(--blue); animation: cursor-blink 1s steps(1) infinite; }
 .hero-cursor.is-typing { animation: none; }
+
+/* Expertise text keeps side padding on small screens */
+.careers > :not(.career-stage) { padding-inline: 24px; }
+
+/* Terminal reserves its finished height, so typing never moves the page */
+.terminal-body { display: grid; }
+.terminal-ghost, .terminal-live { grid-area: 1 / 1; min-width: 0; }
+.terminal-ghost { visibility: hidden; }
